@@ -3,6 +3,9 @@
 
 #include "stdafx.h"
 #include "LabProject02.h"
+#include "GameFramework.h"
+
+CGameFramework gGameFramework;
 
 #define MAX_LOADSTRING 100
 
@@ -43,14 +46,20 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MSG msg;
 
     // 기본 메시지 루프입니다:
-    while (GetMessage(&msg, nullptr, 0, 0))
+    while (::PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
     {
+        if (msg.message == WM_QUIT) break;
         if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
+        else
+        {
+            gGameFramework.FrameAdvance();
+        }
     }
+    gGameFramework.OnDestroy();
 
     return (int) msg.wParam;
 }
@@ -76,7 +85,9 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_LABPROJECT02));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_LABPROJECT02);
+//wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_LABPROJECT02);
+// 주 윈도우의 메뉴가 나타나지 않도록 한다.
+    wcex.lpszMenuName   = NULL;
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -97,16 +108,17 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+   RECT rc = { 0, 0, FRAME_BUFFER_WIDTH, FRAME_BUFFER_HEIGHT };
+   DWORD dwStyle = WS_OVERLAPPED | WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU | WS_BORDER;
+   AdjustWindowRect(&rc, dwStyle, FALSE);
+   HWND hMainWnd = CreateWindowW(szWindowClass, szTitle, dwStyle,
+      CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance, nullptr);
+   if (!hMainWnd) {return FALSE;}
 
-   if (!hWnd)
-   {
-      return FALSE;
-   }
+   gGameFramework.OnCreate(hInstance, hMainWnd);
 
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
+   ::ShowWindow(hMainWnd, nCmdShow);
+   ::UpdateWindow(hMainWnd);
 
    return TRUE;
 }
@@ -131,11 +143,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // 메뉴 선택을 구문 분석합니다:
             switch (wmId)
             {
-            case IDM_ABOUT:
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+            case WM_SIZE:
+            case WM_LBUTTONDOWN:
+            case WM_LBUTTONUP:
+            case WM_RBUTTONDOWN:
+            case WM_RBUTTONUP:
+            case WM_MOUSEMOVE:
+            case WM_KEYDOWN:
+            case WM_KEYUP:
+                gGameFramework.OnProcessingWindowMessage(hWnd, message, wParam, lParam);
                 break;
             case IDM_EXIT:
-                DestroyWindow(hWnd);
+                ::DestroyWindow(hWnd);
                 break;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);

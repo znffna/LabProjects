@@ -476,4 +476,3 @@ void CGameFramework::FrameAdvance()
 
 	m_nSwapChainBufferIndex = m_pdxgiSwapChain->GetCurrentBackBufferIndex();
 }
-
