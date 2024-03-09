@@ -66,7 +66,7 @@ public:
 // 스왑 체인, 디바이스, 서술자 힙, 명령 큐/할당자/리스트를 생성하는 함수이다.
 
 	void CreateRenderTargetViews();
-	void CreateDepthStencilview();
+	void CreateDepthStencilView();
 // 렌더 타겟 뷰와 깊이-스텐실 뷰를 생성하는 함수이다.
 
 	void BuildObjects();
