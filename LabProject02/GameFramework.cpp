@@ -4,7 +4,7 @@
 CGameFramework::CGameFramework()
 {
 	m_pdxgiFactory = NULL;
-	m_pdxgiSwapCahin = NULL;
+	m_pdxgiSwapChain = NULL;
 	m_pd3dDevice = NULL;
 
 	m_pd3dCommandAllocator = NULL;
@@ -46,7 +46,7 @@ bool CGameFramework::OnCreate(HINSTANCE hInstance, HWND hMainWnd)
 	CreateSwapChain();
 	CreateRtvAndDsvDescriptorHeaps();
 	CreateRenderTargetViews();
-	CreateDepthStencilview();
+	CreateDepthStencilView();
 
 	BuildObjects();
 // 렌더링할 게임 객체를 생성한다.
@@ -115,7 +115,8 @@ void CGameFramework::CreateSwapChain()
 	::ZeroMemory(&dxgiSwapChainFullScreenDesc, sizeof(DXGI_SWAP_CHAIN_FULLSCREEN_DESC));
 	dxgiSwapChainFullScreenDesc.RefreshRate.Numerator = 60;
 	dxgiSwapChainFullScreenDesc.RefreshRate.Denominator = 1;
-	dxgiSwapChainFullScreenDesc.ScanlineOrdering = DXGI_MODE_SCALING_UNSPECIFIED;
+	dxgiSwapChainFullScreenDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+	dxgiSwapChainFullScreenDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 	dxgiSwapChainFullScreenDesc.Windowed = TRUE;
 
 	m_pdxgiFactory->CreateSwapChainForHwnd(m_pd3dCommandQueue, m_hWnd,
