@@ -45,3 +45,6 @@ using Microsoft::WRL::ComPtr;
 
 #define FRAME_BUFFER_WIDTH	800
 #define FRAME_BUFFER_HEIGHT 600
+
+// 아래는 처음에 전체화면 모드로 실행할지 여부 ( 주석처리시 : 창모드 실행, 주석 없앨시 : 전체화면 실행)
+//#define _WITH_SWAPCHAIN_FULLSCREEN_STATE
