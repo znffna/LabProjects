@@ -1,5 +1,6 @@
 #pragma once
 #include "Timer.h"
+#include "Scene.h"
 
 class CGameFramework
 {
@@ -50,13 +51,16 @@ private:
 // 그래픽스 파이프라인 상태 객체에 대한 인터페이스 포인터이다.
 
 	ID3D12Fence* m_pd3dFence;
-	UINT64 m_nFenceValue;
+	UINT64 m_nFenceValues[m_nSwapChainBuffers];
 	HANDLE m_hFenceEvent;
 // 펜스 인터페이스 포인터, 펜스의 값, 이벤트 핸들이다.
 
 	D3D12_VIEWPORT m_d3dViewport;
 	D3D12_RECT m_d3dScissorRect;
 // 뷰포트와 씨저 사각형이다.
+
+	CScene* m_pScene;
+// 씬을 위한 멤버 변수
 
 public:
 	CGameFramework();
@@ -95,4 +99,7 @@ public:
 
 	void ChangeSwapChainState();
 // 윈도우의 창모드 / 전체화면 전환을 위한 함수이다.
+
+	void MoveToNextFrame();
+
 };
