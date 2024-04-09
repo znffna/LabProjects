@@ -19,16 +19,35 @@ float4 VSMain(uint nVertexID : SV_VertexID) : SV_POSITION
 #define FRAME_BUFFER_WIDTH      800.0f
 #define FRAME_BUFFER_HEIGHT      600.0f
 
+#define HALF_WIDTH (FRAME_BUFFER_WIDTH * 0.5f)
+#define HALF_HEIGHT (FRAME_BUFFER_HEIGHT * 0.5f)
+#define EPSILON 1.0e-5f
+inline bool IsZero(float fValue)
+{
+    return ((abs(fValue) <= EPSILON));
+}
+inline bool IsZero(float fValue, float fEpsilon)
+{
+    return ((abs(fValue) <= fEpsilon));
+}
+inline bool IsEqual(float fA, float fB, float fEpsilon)
+{
+    return ((abs(fA - fB) <=
+fEpsilon));
+}
+
 //ÇÈ¼¿ ¼ÎÀÌ´õ¸¦ Á¤ÀÇÇÑ´Ù.
 float4 PSMain(float4 input : SV_POSITION) : SV_TARGET
 {
     float4 cColor = float4(0.0f, 0.0f, 0.0f, 1.0f);
     
-    float2 f2NDC = float2(input.x / FRAME_BUFFER_WIDTH, input.y / FRAME_BUFFER_HEIGHT) -0.5f;
-    f2NDC.x *= (FRAME_BUFFER_WIDTH / FRAME_BUFFER_HEIGHT);
-    float fLength = length(f2NDC);
-    float fMin = 0.3f, fMax = 0.2f;
-    cColor.rgb = smoothstep(fMin, fMax, fLength);
+    if ((int) input.x == (int) HALF_WIDTH)
+        cColor.g = 1.0f;
+    if ((int) input.y == (int) HALF_HEIGHT)
+        cColor.r = 1.0f;
+    float fDistance = distance((int2) input.xy, float2(HALF_WIDTH, HALF_HEIGHT));
+    if (IsEqual(fDistance, 100.0f, 0.5f))
+        cColor.b = 1.0f;
     
     return (cColor);
 }
