@@ -55,10 +55,6 @@ private:
 	HANDLE m_hFenceEvent;
 // 펜스 인터페이스 포인터, 펜스의 값, 이벤트 핸들이다.
 
-	D3D12_VIEWPORT m_d3dViewport;
-	D3D12_RECT m_d3dScissorRect;
-// 뷰포트와 씨저 사각형이다.
-
 	CScene* m_pScene;
 // 씬을 위한 멤버 변수
 
@@ -101,5 +97,6 @@ public:
 // 윈도우의 창모드 / 전체화면 전환을 위한 함수이다.
 
 	void MoveToNextFrame();
-
+public:
+	CCamera* m_pCamera = NULL;
 };
