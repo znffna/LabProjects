@@ -316,11 +316,11 @@ void CObjectsShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsComman
 	float fzPitch = 12.0f * 2.5f;
 
 	CRotatingObject* pRotatingObject = NULL;
-	for (int x = -xObjects; x <= xObjects; x++)
+	for (int z = +zObjects; z >= -zObjects; z--)
 	{
 		for (int y = -yObjects; y <= yObjects; y++)
 		{
-			for (int z = -zObjects; z <= zObjects; z++)
+			for (int x = -xObjects; x <= xObjects; x++)
 			{
 				pRotatingObject = new CRotatingObject();
 				pRotatingObject->SetMesh(pCubeMesh);
