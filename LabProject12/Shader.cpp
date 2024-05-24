@@ -344,6 +344,15 @@ void CObjectsShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera*
 //=====================================================================================
 //=====================================================================================
 
+CInstancingShader::CInstancingShader()
+{
+}
+
+CInstancingShader::~CInstancingShader()
+{
+}
+
+
 D3D12_INPUT_LAYOUT_DESC CInstancingShader::CreateInputLayout()
 {
 	UINT nInputElementDescs = 7;
@@ -427,7 +436,8 @@ void CInstancingShader::UpdateShaderVariables(ID3D12GraphicsCommandList
 		m_pcbMappedGameObjects[j].m_xmcColor = (j % 2) ? XMFLOAT4(0.5f, 0.0f, 0.0f, 0.0f) :
 			XMFLOAT4(0.0f, 0.0f, 0.5f, 0.0f);
 		XMStoreFloat4x4(&m_pcbMappedGameObjects[j].m_xmf4x4Transform,
-			XMMatrixTranspose(XMLoadFloat4x4(&m_ppObjects[j]->m_xmf4x4World)));
+			XMMatrixTranspose(XMLoadFloat4x4(&m_ppObjects[j]->GetWorld())));
+			//XMMatrixTranspose(XMLoadFloat4x4(&m_ppObjects[j]->m_xmf4x4World)));
 	}
 }
 
@@ -468,6 +478,13 @@ void CInstancingShader::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCom
 	//인스턴싱을 위한 정점 버퍼와 뷰를 생성한다. 
 	CreateShaderVariables(pd3dDevice, pd3dCommandList);
 }
+
+void CInstancingShader::ReleaseObjects()
+{
+	CObjectsShader::ReleaseObjects();
+}
+
+
 
 void CInstancingShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera
 	* pCamera)
