@@ -420,7 +420,7 @@ void CInstancingShader::UpdateShaderVariables(ID3D12GraphicsCommandList
 		m_pcbMappedGameObjects[j].m_xmcColor = (j % 2) ? XMFLOAT4(0.5f, 0.0f, 0.0f, 0.0f) :
 			XMFLOAT4(0.0f, 0.0f, 0.5f, 0.0f);
 		XMStoreFloat4x4(&m_pcbMappedGameObjects[j].m_xmf4x4Transform,
-			XMMatrixTranspose(XMLoadFloat4x4(&m_ppObjects[j]->m_xmf4x4World)));
+			XMMatrixTranspose(XMLoadFloat4x4(&m_ppObjects[j]->GetWorld())));
 	}
 }
 

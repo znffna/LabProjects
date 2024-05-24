@@ -132,7 +132,7 @@
     <ClInclude Include="GameFramework.h" />
     <ClInclude Include="LabProject13.h" />
     <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Object.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene.h" />
@@ -146,7 +146,7 @@
     <ClCompile Include="GameFramework.cpp" />
     <ClCompile Include="LabProject13.cpp" />
     <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />

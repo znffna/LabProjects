@@ -55,6 +55,9 @@ public:
 	void Rotate(float fPitch = 10.0f, float fYaw = 10.0f, float fRoll = 10.0f);
 	virtual void Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera* pCamera, UINT
 		nInstances);
+
+public:
+	const XMFLOAT4X4& GetWorld() const { return m_xmf4x4World; }
 };
 
 class CRotatingObject : public CGameObject
