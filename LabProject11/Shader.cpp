@@ -47,8 +47,8 @@ D3D12_DEPTH_STENCIL_DESC CShader::CreateDepthStencilState()
 
 
 	//깊이-검사를 하지 않으므로 여러 개의 객체들이 겹쳐지는 것처럼 그려진다.
-	//d3dDepthStencilDesc.DepthEnable = TRUE;
-	d3dDepthStencilDesc.DepthEnable = FALSE;
+	d3dDepthStencilDesc.DepthEnable = TRUE;
+	//d3dDepthStencilDesc.DepthEnable = FALSE;
 
 	d3dDepthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
 	d3dDepthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
