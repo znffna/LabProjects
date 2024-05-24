@@ -1,4 +1,4 @@
-#include "Object.h"
+#include "GameObject.h"
 #include "Shader.h"
 
 CGameObject::CGameObject()

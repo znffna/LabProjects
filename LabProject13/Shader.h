@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Object.h"
+#include "GameObject.h"
 #include "Camera.h"
 
 //게임 객체의 정보를 셰이더에게 넘겨주기 위한 구조체(상수 버퍼)이다. 
