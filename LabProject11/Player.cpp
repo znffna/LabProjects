@@ -1,6 +1,8 @@
 #include "Shader.h"
 #include "Player.h"
 
+bool CPlayer::debug = false;
+
 CPlayer::CPlayer()
 {
 	m_pCamera = NULL;
@@ -66,6 +68,7 @@ void CPlayer::Move(DWORD dwDirection, float fDistance, bool bUpdateVelocity)
 		if (dwDirection & DIR_UP) xmf3Shift = Vector3::Add(xmf3Shift, m_xmf3Up, fDistance);
 		if (dwDirection & DIR_DOWN) xmf3Shift = Vector3::Add(xmf3Shift, m_xmf3Up, -fDistance);
 
+		if (debug) printf("xmf3Shift is (%f, %f, %f)\n", xmf3Shift.x, xmf3Shift.y, xmf3Shift.z);
 		//플레이어를 현재 위치 벡터에서 xmf3Shift 벡터만큼 이동한다.
 		Move(xmf3Shift, bUpdateVelocity);
 	}
@@ -78,11 +81,17 @@ void CPlayer::Move(const XMFLOAT3& xmf3Shift, bool bUpdateVelocity)
 	{
 		//플레이어의 속도 벡터를 xmf3Shift 벡터만큼 변경한다. 
 		m_xmf3Velocity = Vector3::Add(m_xmf3Velocity, xmf3Shift);
+		debug = true;
+		if (debug) printf("Player's Velocity = (%f, %f, %f)\n", m_xmf3Velocity.x, m_xmf3Velocity.y, m_xmf3Velocity.z);
+		debug = false;
 	}
 	else
 	{
 		//플레이어를 현재 위치 벡터에서 xmf3Shift 벡터만큼 이동한다. 
 		m_xmf3Position = Vector3::Add(m_xmf3Position, xmf3Shift);
+		debug = true;
+		if (debug) printf("Player's Position = (%f, %f, %f)\n", m_xmf3Position.x, m_xmf3Position.y, m_xmf3Position.z);
+		debug = false;
 
 		//플레이어의 위치가 변경되었으므로 카메라의 위치도 xmf3Shift 벡터만큼 이동한다. 
 		if (m_pCamera) m_pCamera->Move(xmf3Shift);
@@ -191,8 +200,10 @@ void CPlayer::Update(float fTimeElapsed)
 	if (fLength > m_fMaxVelocityY) m_xmf3Velocity.y *= (fMaxVelocityY / fLength);
 
 	//플레이어를 속도 벡터 만큼 실제로 이동한다(카메라도 이동될 것이다).
-	XMFLOAT3 xmf3Velocity = Vector3::ScalarProduct(m_xmf3Velocity, fTimeElapsed, false);
-	Move(xmf3Velocity, false);
+	/* XMFLOAT3 xmf3Velocity = Vector3::ScalarProduct(m_xmf3Velocity, fTimeElapsed, false);
+	Move(xmf3Velocity, false);*/
+	Move(m_xmf3Velocity, false);
+
 
 	/*플레이어의 위치가 변경될 때 추가로 수행할 작업을 수행한다. 플레이어의 새로운 위치가 유효한 위치가 아닐 수도
 	있고 또는 플레이어의 충돌 검사 등을 수행할 필요가 있다. 이러한 상황에서 플레이어의 위치를 유효한 위치로 다시

@@ -420,8 +420,14 @@ void CGameFramework::ProcessInput()
 	DWORD dwDirection = 0;
 	/*키보드의 상태 정보를 반환한다. 화살표 키(‘→’, ‘←’, ‘↑’, ‘↓’)를 누르면 플레이어를 오른쪽/왼쪽(로컬 x-축), 앞/
 	뒤(로컬 z-축)로 이동한다. ‘Page Up’과 ‘Page Down’ 키를 누르면 플레이어를 위/아래(로컬 y-축)로 이동한다.*/
+
 	if (::GetKeyboardState(pKeyBuffer))
 	{
+		for (int i = 0; i < 256; i++) {
+			if (pKeyBuffer[i] & 0x80) {
+				printf("Key 0x%02X is down\n", i);
+			}
+		}
 		if (pKeyBuffer[VK_UP] & 0xF0) dwDirection |= DIR_FORWARD;
 		if (pKeyBuffer[VK_DOWN] & 0xF0) dwDirection |= DIR_BACKWARD;
 		if (pKeyBuffer[VK_LEFT] & 0xF0) dwDirection |= DIR_LEFT;
@@ -491,6 +497,7 @@ void CGameFramework::WaitForGpuComplete()
 void CGameFramework::FrameAdvance()
 {
 	//타이머의 시간이 갱신되도록 하고 프레임 레이트를 계산한다.
+	//m_GameTimer.Tick(60.0f);
 	m_GameTimer.Tick(0.0f);
 
 	ProcessInput();
