@@ -423,11 +423,6 @@ void CGameFramework::ProcessInput()
 
 	if (::GetKeyboardState(pKeyBuffer))
 	{
-		for (int i = 0; i < 256; i++) {
-			if (pKeyBuffer[i] & 0x80) {
-				printf("Key 0x%02X is down\n", i);
-			}
-		}
 		if (pKeyBuffer[VK_UP] & 0xF0) dwDirection |= DIR_FORWARD;
 		if (pKeyBuffer[VK_DOWN] & 0xF0) dwDirection |= DIR_BACKWARD;
 		if (pKeyBuffer[VK_LEFT] & 0xF0) dwDirection |= DIR_LEFT;
