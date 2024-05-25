@@ -60,7 +60,8 @@ private:
 
 	// 씬을 위한 멤버 변수
 	CScene* m_pScene;
-
+	
+	CGameObject* m_pSelectedObject = NULL;
 public:
 	CGameFramework();
 	~CGameFramework();
@@ -109,4 +110,7 @@ public:
 
 	//마지막으로 마우스 버튼을 클릭할 때의 마우스 커서의 위치이다. 
 	POINT m_ptOldCursorPos; 
+
+public:
+	void ProcessSelectedObject(DWORD dwDirection, float cxDelta, float cyDelta);
 };
