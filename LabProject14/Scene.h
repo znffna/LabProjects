@@ -31,4 +31,10 @@ protected:
 	int m_nShaders = 0;
 
 	ID3D12RootSignature* m_pd3dGraphicsRootSignature = NULL;
+
+protected:
+	CHeightMapTerrain* m_pTerrain = NULL;
+
+public:
+	CHeightMapTerrain* GetTerrain() { return(m_pTerrain); }
 };
