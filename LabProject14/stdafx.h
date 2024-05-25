@@ -191,7 +191,7 @@ namespace Vector3
 namespace Vector4
 {
 	//4-차원 벡터와 스칼라(실수)의 곱을 반환하는 함수이다. 
-	inline XMFLOAT4 Multiply(float fScalar, XMFLOAT4& xmf4Vector)
+	inline XMFLOAT4 Multiply(const float fScalar, const XMFLOAT4& xmf4Vector)
 	{
 		XMFLOAT4 xmf4Result;
 		XMStoreFloat4(&xmf4Result, fScalar * XMLoadFloat4(&xmf4Vector));
@@ -211,13 +211,6 @@ namespace Vector4
 		XMFLOAT4 xmf4Result;
 		XMStoreFloat4(&xmf4Result, XMLoadFloat4(&xmf4Vector1) *
 			XMLoadFloat4(&xmf4Vector2));
-		return(xmf4Result);
-	}
-
-	inline XMFLOAT4 Multiply(float fScalar, XMFLOAT4& xmf4Vector)
-	{
-		XMFLOAT4 xmf4Result;
-		XMStoreFloat4(&xmf4Result, fScalar * XMLoadFloat4(&xmf4Vector));
 		return(xmf4Result);
 	}
 }
