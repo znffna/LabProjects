@@ -7,7 +7,7 @@
 
 CGameFramework gGameFramework;
 // 콘솔창 디버그를 위한 flags
-static bool debug = true;
+static bool debug = false;
 
 #define MAX_LOADSTRING 100
 
