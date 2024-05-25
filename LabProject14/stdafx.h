@@ -59,9 +59,23 @@ extern ID3D12Resource* CreateBufferResource(ID3D12Device* pd3dDevice,
 지정한다.*/
 #define RANDOM_COLOR XMFLOAT4(rand() / float(RAND_MAX), rand() / float(RAND_MAX), rand() / float(RAND_MAX), rand() / float(RAND_MAX))
 
+#define EPSILON 1.0e-10f
+inline bool IsZero(float fValue) { return((fabsf(fValue) < EPSILON)); }
+inline bool IsEqual(float fA, float fB) { return(::IsZero(fA - fB)); }
+inline float InverseSqrt(float fValue) { return 1.0f / sqrtf(fValue); }
+inline void Swap(float* pfS, float* pfT) { float fTemp = *pfS; *pfS = *pfT; *pfT = fTemp; }
+
 //3차원 벡터의 연산
 namespace Vector3
 {
+	//3-차원 벡터가 영벡터인 가를 반환하는 함수이다. 
+	inline bool IsZero(XMFLOAT3& xmf3Vector)
+	{
+		if (::IsZero(xmf3Vector.x) && ::IsZero(xmf3Vector.y) && ::IsZero(xmf3Vector.z))
+			return(true);
+		return(false);
+	}
+
 	inline XMFLOAT3 XMVectorToFloat3(XMVECTOR& xmvVector)
 	{
 		XMFLOAT3 xmf3Result;
@@ -176,6 +190,14 @@ namespace Vector3
 //4차원 벡터의 연산
 namespace Vector4
 {
+	//4-차원 벡터와 스칼라(실수)의 곱을 반환하는 함수이다. 
+	inline XMFLOAT4 Multiply(float fScalar, XMFLOAT4& xmf4Vector)
+	{
+		XMFLOAT4 xmf4Result;
+		XMStoreFloat4(&xmf4Result, fScalar * XMLoadFloat4(&xmf4Vector));
+		return(xmf4Result);
+	}
+
 	inline XMFLOAT4 Add(const XMFLOAT4& xmf4Vector1, const XMFLOAT4& xmf4Vector2)
 	{
 		XMFLOAT4 xmf4Result;
@@ -183,6 +205,7 @@ namespace Vector4
 			XMLoadFloat4(&xmf4Vector2));
 		return(xmf4Result);
 	}
+
 	inline XMFLOAT4 Multiply(XMFLOAT4& xmf4Vector1, XMFLOAT4& xmf4Vector2)
 	{
 		XMFLOAT4 xmf4Result;
@@ -190,6 +213,7 @@ namespace Vector4
 			XMLoadFloat4(&xmf4Vector2));
 		return(xmf4Result);
 	}
+
 	inline XMFLOAT4 Multiply(float fScalar, XMFLOAT4& xmf4Vector)
 	{
 		XMFLOAT4 xmf4Result;
