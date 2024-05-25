@@ -126,7 +126,7 @@ namespace Vector3
 		return(xmf3Result.x);
 	}
 
-	inline XMFLOAT3 CrossProduct(XMFLOAT3& xmf3Vector1, XMFLOAT3& xmf3Vector2, bool
+	inline XMFLOAT3 CrossProduct(const XMFLOAT3& xmf3Vector1, const XMFLOAT3& xmf3Vector2, bool
 		bNormalize = true)
 	{
 		XMFLOAT3 xmf3Result;
