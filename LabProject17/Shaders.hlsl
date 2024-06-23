@@ -49,24 +49,6 @@ float4 PSPlayer(VS_DIFFUSED_OUTPUT input) : SV_TARGET
     return (input.color);
 }
 
-//정점 셰이더를 정의한다.
-VS_DIFFUSED_OUTPUT VSDiffused(VS_DIFFUSED_INPUT input)
-{
-    VS_DIFFUSED_OUTPUT output;
-    //정점을 변환(월드 변환, 카메라 변환, 투영 변환)한다.
-    output.position = mul(mul(mul(float4(input.position, 1.0f), gmtxWorld), gmtxView),
-    gmtxProjection);
-    output.color = input.color;
-    
-    return(output);
-}
-
-//픽셀 셰이더를 정의한다.
-float4 PSDiffused(VS_DIFFUSED_OUTPUT input) : SV_TARGET
-{
-    return(input.color);
-}
-
 //정점 조명을 사용
 #define _WITH_VERTEX_LIGHTING
 

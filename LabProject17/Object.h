@@ -56,7 +56,8 @@ public:
 	void AddRef() { m_nReferences++; }
 	void Release() { if (--m_nReferences <= 0) delete this; }
 
-protected:
+//protected:
+public:
 	XMFLOAT4X4 m_xmf4x4World;
 	CMesh* m_pMesh = NULL;
 	//게임 객체가 쉐이더를 가지지 않고 재질을 가진다.
