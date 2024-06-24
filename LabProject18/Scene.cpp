@@ -33,16 +33,19 @@ void CScene::BuildObjects(ID3D12Device* pd3dDevice, ID3D12GraphicsCommandList
 		m_pd3dCbvSrvDescriptorHeap->GetGPUDescriptorHandleForHeapStart();
 	m_d3dMaterialsCbvCPUDescriptorHandle = d3dCbvCPUDescriptorStartHandle;
 	m_d3dMaterialsCbvGPUDescriptorHandle = d3dCbvGPUDescriptorStartHandle;
+
 	m_d3dLightsCbvCPUDescriptorHandle.ptr = d3dCbvCPUDescriptorStartHandle.ptr +
 		::gnCbvSrvDescriptorIncrementSize;
 	m_d3dLightsCbvGPUDescriptorHandle.ptr = d3dCbvGPUDescriptorStartHandle.ptr +
 		::gnCbvSrvDescriptorIncrementSize;
-	m_d3dObjectsCbvCPUDescriptorHandle.ptr = d3dCbvCPUDescriptorStartHandle.ptr +
-		::gnCbvSrvDescriptorIncrementSize;
-	m_d3dObjectsCbvGPUDescriptorHandle.ptr = d3dCbvGPUDescriptorStartHandle.ptr +
-		::gnCbvSrvDescriptorIncrementSize;
 
-	m_pShaders[0].BuildObjects(pd3dDevice, pd3dCommandList);
+	m_d3dObjectsCbvCPUDescriptorHandle.ptr = d3dCbvCPUDescriptorStartHandle.ptr +
+		::gnCbvSrvDescriptorIncrementSize * 2;
+	m_d3dObjectsCbvGPUDescriptorHandle.ptr = d3dCbvGPUDescriptorStartHandle.ptr +
+		::gnCbvSrvDescriptorIncrementSize * 2;
+
+	m_pShaders[0].BuildObjects(pd3dDevice, pd3dCommandList,
+		m_d3dObjectsCbvCPUDescriptorHandle, m_d3dObjectsCbvGPUDescriptorHandle);
 
 	BuildLightsAndMaterials();
 

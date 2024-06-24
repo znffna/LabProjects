@@ -59,6 +59,9 @@ extern ID3D12Resource* CreateBufferResource(ID3D12Device* pd3dDevice,
 	D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER, ID3D12Resource** ppd3dUploadBuffer =
 	NULL);
 
+extern UINT gnCbvSrvDescriptorIncrementSize;
+
+
 // 아래는 처음에 전체화면 모드로 실행할지 여부 ( 주석처리시 : 창모드 실행, 주석 없앨시 : 전체화면 실행)
 //#define _WITH_SWAPCHAIN_FULLSCREEN_STATE
 

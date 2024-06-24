@@ -413,8 +413,9 @@ void CObjectsShader::Render(ID3D12GraphicsCommandList* pd3dCommandList, CCamera*
 	{
 		if (m_ppObjects[j])
 		{
-			pd3dCommandList->SetGraphicsRootConstantBufferView(2,
-				d3dcbGameObjectGpuVirtualAddress + (ncbGameObjectBytes * j));
+			
+			/*pd3dCommandList->SetGraphicsRootConstantBufferView(2,
+				d3dcbGameObjectGpuVirtualAddress + (ncbGameObjectBytes * j));*/
 			m_ppObjects[j]->Render(pd3dCommandList, pCamera);
 		}
 	}

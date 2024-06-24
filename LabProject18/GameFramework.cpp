@@ -202,6 +202,9 @@ void CGameFramework::CreateDirect3DDevice()
   벤트의 값을 자동적으로 FALSE가 되도록 생성한다.*/
 
 	if (pd3dAdapter) pd3dAdapter->Release();
+
+	// CBV_SRV_디스크립터의 1개당 사이즈를 가져온다.
+	gnCbvSrvDescriptorIncrementSize = m_pd3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 }
 
 void CGameFramework::CreateCommandQueueAndList()
